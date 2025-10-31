@@ -56,22 +56,105 @@ export function buildMultiplePolygonsGeoJSON(): FeatureCollection<Polygon> {
         type: 'Feature',
         geometry: {
           type: 'Polygon',
-          coordinates: [polygonCentroSantaFe],
+          coordinates: [
+            [
+              [-60.7091, -31.6488],
+              [-60.7071, -31.6503],
+              [-60.7048, -31.6487],
+              [-60.7068, -31.6472],
+              [-60.7091, -31.6488],
+            ],
+          ],
         },
         properties: {
-          name: 'Centro de Santa Fe',
-          categoria: 'urbano',
+          name: 'Corte Programado',
+          tension: 'MT',
+          tipo: 'Programado',
+          fechaCreacion: '2025-10-31',
         },
       },
       {
         type: 'Feature',
         geometry: {
           type: 'Polygon',
-          coordinates: [polygonParqueSur],
+          coordinates: [
+            [
+              [-60.7184, -31.6395],
+              [-60.7159, -31.641],
+              [-60.7136, -31.6391],
+              [-60.7158, -31.6377],
+              [-60.7184, -31.6395],
+            ],
+          ],
         },
         properties: {
-          name: 'Parque del Sur',
-          categoria: 'recreativo',
+          name: 'Corte Forzado',
+          tension: 'BT',
+          tipo: 'Forzado',
+          fechaCreacion: '2025-10-31',
+        },
+      },
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          coordinates: [
+            [
+              [-60.6962, -31.6423],
+              [-60.6937, -31.644],
+              [-60.6915, -31.6422],
+              [-60.694, -31.6407],
+              [-60.6962, -31.6423],
+            ],
+          ],
+        },
+        properties: {
+          name: 'Corte Programado',
+          tension: 'MT',
+          tipo: 'Programado',
+          fechaCreacion: '2025-10-31',
+        },
+      },
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          coordinates: [
+            [
+              [-60.7321, -31.6509],
+              [-60.7298, -31.6523],
+              [-60.7272, -31.6502],
+              [-60.7295, -31.6487],
+              [-60.7321, -31.6509],
+            ],
+          ],
+        },
+        properties: {
+          name: 'Corte Forzado',
+          tension: 'BT',
+          tipo: 'Forzado',
+          fechaCreacion: '2025-10-31',
+        },
+      },
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          coordinates: [
+            [
+              [-60.7135, -31.633],
+              [-60.7112, -31.6346],
+              [-60.709, -31.6325],
+              [-60.7113, -31.6311],
+              [-60.7135, -31.633],
+            ],
+          ],
+        },
+        properties: {
+          name: 'Corte Forzado',
+          tension: 'MT',
+          tipo: 'Forzado',
+          fechaCreacion: '2025-10-31',
         },
       },
     ],
