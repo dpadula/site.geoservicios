@@ -8,3 +8,8 @@ export interface Feature<G = Polygon, P = Record<string, any>> {
   geometry: G;
   properties: P;
 }
+
+export interface FeatureCollection<G = Polygon, P = Record<string, any>> {
+  type: 'FeatureCollection';
+  features: Feature<G, P>[];
+}
