@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
+import logger from '../middleware/pino-logger.js';
 import {
   buildMultiplePolygonsGeoJSON,
   buildPolygonGeoJSON,
 } from '../services/polygon.service.js';
-import { logger } from '../utils/logger.js';
 
 export const getPolygonGeoJSON = (req: Request, res: Response) => {
   try {

@@ -23,25 +23,18 @@ type CustomLogger = Logger & {
   crit: (msg: string, ...args: unknown[]) => void;
   warning: (msg: string, ...args: unknown[]) => void;
   notice: (msg: string, ...args: unknown[]) => void;
-};
-
-export interface AppLogger {
-  emerg: (msg: string, ...args: unknown[]) => void;
-  alert: (msg: string, ...args: unknown[]) => void;
-  crit: (msg: string, ...args: unknown[]) => void;
   error: (msg: string, ...args: unknown[]) => void;
-  warning: (msg: string, ...args: unknown[]) => void;
-  notice: (msg: string, ...args: unknown[]) => void;
   info: (msg: string, ...args: unknown[]) => void;
   debug: (msg: string, ...args: unknown[]) => void;
-}
+};
 
 // ==========================
 // 🔹 Configuración base
 // ==========================
 const timestampFormat: string = config.has('logDatetimeFormat')
   ? config.get<string>('logDatetimeFormat')
-  : 'YYYY-MM-DD HH:mm:ss';
+  : 'DD-MM-YYYY HH:mm:ss';
+console.log('🚀 ~ timestampFormat:', timestampFormat);
 
 interface EnvConfig {
   level: CustomLevel;
@@ -75,22 +68,11 @@ const options: Record<'DESA' | 'PRO', EnvConfig> = {
 };
 
 // ==========================
-// 🔹 Helper para formateo
-// ==========================
-function formatMessage(msg: string, args: unknown[]): string {
-  if (!args || args.length === 0) return msg;
-  const strArgs = args
-    .map((a) => JSON.stringify(a))
-    .join(' ')
-    .replace(/['"]+/g, '');
-  return `${msg} ${strArgs}`;
-}
-
-// ==========================
 // 🔹 Creación del logger
 // ==========================
-export function createAppLogger(): AppLogger {
+export function createAppLogger(): CustomLogger {
   const env = process.env.NODE_ENV === 'production' ? 'PRO' : 'DESA';
+  console.log('🚀 ~ createAppLogger ~ env:', env);
 
   const pinoLogger = pino({
     customLevels,
@@ -101,18 +83,7 @@ export function createAppLogger(): AppLogger {
     timestamp: pino.stdTimeFunctions.isoTime,
   } as LoggerOptions) as CustomLogger;
 
-  const logger: AppLogger = {
-    emerg: (msg, ...args) => pinoLogger.emerg(formatMessage(msg, args)),
-    alert: (msg, ...args) => pinoLogger.alert(formatMessage(msg, args)),
-    crit: (msg, ...args) => pinoLogger.crit(formatMessage(msg, args)),
-    error: (msg, ...args) => pinoLogger.error(formatMessage(msg, args)),
-    warning: (msg, ...args) => pinoLogger.warning(formatMessage(msg, args)),
-    notice: (msg, ...args) => pinoLogger.notice(formatMessage(msg, args)),
-    info: (msg, ...args) => pinoLogger.info(formatMessage(msg, args)),
-    debug: (msg, ...args) => pinoLogger.debug(formatMessage(msg, args)),
-  };
-
-  return logger;
+  return pinoLogger;
 }
 
 // ==========================
