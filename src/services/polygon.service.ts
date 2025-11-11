@@ -1,4 +1,4 @@
-import { Feature, FeatureCollection, Polygon } from '../types/geojson';
+import { Feature, FeatureCollection, Polygon } from '../types/geojson.js';
 
 /**
  * Simula coordenadas obtenidas desde una base de datos o API externa.

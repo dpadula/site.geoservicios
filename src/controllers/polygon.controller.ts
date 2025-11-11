@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import {
   buildMultiplePolygonsGeoJSON,
   buildPolygonGeoJSON,
-} from '../services/polygon.service';
+} from '../services/polygon.service.js';
 import { logger } from '../utils/logger.js';
 
 export const getPolygonGeoJSON = (req: Request, res: Response) => {

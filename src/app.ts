@@ -1,5 +1,5 @@
 import express from 'express';
-import polygonRoutes from './routes/polygon.routes';
+import polygonRoutes from './routes/polygon.routes.js';
 
 const app = express();
 

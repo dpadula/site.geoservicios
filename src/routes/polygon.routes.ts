@@ -2,7 +2,7 @@ import { Router } from 'express';
 import {
   getMultiplePolygonsGeoJSON,
   getPolygonGeoJSON,
-} from '../controllers/polygon.controller';
+} from '../controllers/polygon.controller.js';
 
 const router = Router();
 
