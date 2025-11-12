@@ -2,34 +2,22 @@ import config from 'config';
 import pino, { Logger, LoggerOptions } from 'pino';
 
 // ==========================
-// 🔹 Definición de niveles
-// ==========================
-const customLevels = {
-  emerg: 70,
-  alert: 60,
-  crit: 50,
-  error: 40,
-  warning: 30,
-  notice: 25,
-  info: 20,
-  debug: 10,
-} as const;
-
-type CustomLevel = keyof typeof customLevels;
-
-type CustomLogger = Logger & {
-  [K in CustomLevel]: (msg: string, ...args: unknown[]) => void;
-};
-
-// ==========================
 // 🔹 Configuración base
 // ==========================
 const timestampFormat: string = config.has('logDatetimeFormat')
   ? config.get<string>('logDatetimeFormat')
   : 'dd/MM/yyyy HH:mm:ss'; // formato correcto para pino-pretty
 
+// fatal	60	errores críticos
+// error	50	fallos normales
+// warn	40	advertencias
+// info	30	información general
+// debug	20	mensajes de depuración
+// trace	10	mensajes muy detallados
+// silent	-∞	desactivar logging
+
 interface EnvConfig {
-  level: CustomLevel;
+  level: 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal' | 'silent';
   transport?: LoggerOptions['transport'];
 }
 
@@ -47,7 +35,7 @@ const options: Record<'DESA' | 'PRO', EnvConfig> = {
     },
   },
   PRO: {
-    level: 'notice',
+    level: 'info',
     transport: {
       target: 'pino/file',
       options: {
@@ -60,23 +48,21 @@ const options: Record<'DESA' | 'PRO', EnvConfig> = {
 // ==========================
 // 🔹 Creación del logger
 // ==========================
-export function createAppLogger(): CustomLogger {
+export function createAppLogger(): Logger {
   const env = process.env.NODE_ENV === 'production' ? 'PRO' : 'DESA';
 
-  const pinoLogger = pino({
-    customLevels,
-    useOnlyCustomLevels: true,
+  const logger = pino({
     level: options[env].level,
     transport: options[env].transport,
     base: null,
-    timestamp: pino.stdTimeFunctions.isoTime,
-  } as LoggerOptions) as CustomLogger;
+    timestamp: pino.stdTimeFunctions.isoTime, // estándar ISO
+  } as LoggerOptions);
 
-  return pinoLogger;
+  return logger;
 }
 
 // ==========================
-// 🔹 Export singleton
+// 🔹 Export singleton por defecto
 // ==========================
 const logger = createAppLogger();
 export default logger;
