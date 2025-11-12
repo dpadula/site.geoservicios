@@ -1,0 +1,27 @@
+{
+  "server": {
+    "name": "Server GeoServicios - SITE",
+    "description": "Servidor de WebServices para exponer poligonos de cortes de energía",
+    "port": 3000
+  },
+  "oracle": {
+    "poolAlias": "PROGEO",
+    "user": "EPE",
+    "password": "Erp3K6",
+    "connectString": "ccsf-gis-db01:1521/epegis",
+    "poolMax": 5,
+    "poolMin": 1,
+    "poolIncrement": 1
+  },
+  "oracleDESA": {
+    "poolAlias": "DESA",
+    "user": "EPE",
+    "password": "Erp3K6",
+    "connectString": "ccros-gis-desadb1:1521/desar1",
+    "poolMax": 5,
+    "poolMin": 1,
+    "poolIncrement": 1
+  },
+  "logDatetimeFormat": "dd/mm/yyyy HH:mm:ss",
+  "conversionDatetimeFormat": "dd/mm/yyyy HH:mm"
+}
