@@ -1,6 +1,7 @@
 import express from 'express';
 import siteRoutes from './routes/site.routes.js';
 
+//test
 const app = express();
 
 // Middlewares base
