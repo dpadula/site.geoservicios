@@ -10,7 +10,7 @@ export const getPolygonGeoJSON = (req: Request, res: Response) => {
     const geojson = buildPolygonGeoJSON();
     res.json(geojson);
   } catch (err) {
-    logger.error('Error al generar GeoJSON', err);
+    logger.error({ err: err as Error }, 'Error al generar GeoJSON');
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
@@ -20,7 +20,7 @@ export const getMultiplePolygonsGeoJSON = (req: Request, res: Response) => {
     const geojson = buildMultiplePolygonsGeoJSON();
     res.json(geojson);
   } catch (err) {
-    logger.error('Error al generar FeatureCollection', err);
+    logger.error({ err: err as Error }, 'Error al generar FeatureCollection');
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
