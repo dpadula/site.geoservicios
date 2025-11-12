@@ -7,7 +7,6 @@ const app = express();
 app.use(express.json());
 
 // Rutas
-app.use('/api/polygons', polygonRoutes);
 app.use('/api/cortes', polygonRoutes);
 
 export default app;
