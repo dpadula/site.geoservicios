@@ -18,14 +18,7 @@ const customLevels = {
 type CustomLevel = keyof typeof customLevels;
 
 type CustomLogger = Logger & {
-  emerg: (msg: string, ...args: unknown[]) => void;
-  alert: (msg: string, ...args: unknown[]) => void;
-  crit: (msg: string, ...args: unknown[]) => void;
-  warning: (msg: string, ...args: unknown[]) => void;
-  notice: (msg: string, ...args: unknown[]) => void;
-  error: (msg: string, ...args: unknown[]) => void;
-  info: (msg: string, ...args: unknown[]) => void;
-  debug: (msg: string, ...args: unknown[]) => void;
+  [K in CustomLevel]: (msg: string, ...args: unknown[]) => void;
 };
 
 // ==========================
@@ -33,8 +26,7 @@ type CustomLogger = Logger & {
 // ==========================
 const timestampFormat: string = config.has('logDatetimeFormat')
   ? config.get<string>('logDatetimeFormat')
-  : 'DD-MM-YYYY HH:mm:ss';
-console.log('🚀 ~ timestampFormat:', timestampFormat);
+  : 'dd/MM/yyyy HH:mm:ss'; // formato correcto para pino-pretty
 
 interface EnvConfig {
   level: CustomLevel;
@@ -49,30 +41,27 @@ const options: Record<'DESA' | 'PRO', EnvConfig> = {
       options: {
         colorize: true,
         translateTime: `SYS:${timestampFormat}`,
-        messageFormat: '[{levelLabel}] {msg}',
+        messageFormat: '[{level}] {msg}', // usamos {level} en lugar de {levelLabel}
         ignore: 'pid,hostname',
       },
     },
   },
   PRO: {
     level: 'notice',
-    // En producción escribimos logs simples en archivo plano (sin rotación)
     transport: {
       target: 'pino/file',
       options: {
-        destination: './log/app.log',
+        destination: './log/geoservicios.log',
         mkdir: true,
       },
     },
   },
 };
-
 // ==========================
 // 🔹 Creación del logger
 // ==========================
 export function createAppLogger(): CustomLogger {
   const env = process.env.NODE_ENV === 'production' ? 'PRO' : 'DESA';
-  console.log('🚀 ~ createAppLogger ~ env:', env);
 
   const pinoLogger = pino({
     customLevels,
@@ -87,7 +76,7 @@ export function createAppLogger(): CustomLogger {
 }
 
 // ==========================
-// 🔹 Export singleton por defecto
+// 🔹 Export singleton
 // ==========================
 const logger = createAppLogger();
 export default logger;

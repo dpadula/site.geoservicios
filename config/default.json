@@ -22,6 +22,6 @@
     "poolMin": 1,
     "poolIncrement": 1
   },
-  "logDatetimeFormat": "DD/MM/YYYY HH:mm:ss",
-  "conversionDatetimeFormat": "DD/MM/YYYY HH:mm"
+  "logDatetimeFormat": "dd/mm/yyyy HH:mm:ss",
+  "conversionDatetimeFormat": "dd/mm/yyyy HH:mm"
 }
